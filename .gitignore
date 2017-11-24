@@ -1,0 +1,15 @@
+*.jnl
+*.log
+*.eps
+*.mat
+*-macroexp.mod
+*.asv
+*_dynamic.m
+*_set_auxiliary_variables.m
+*_static.m
+*_steadystate2.m
+
+*.fig
+*-trim.png
+
+checksum
