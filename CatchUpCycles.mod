@@ -86,10 +86,10 @@ Rs_STEADY = 0;
 // The following block of params are targets on steady-states of endogenous variables.
 parameters A_STEADY U_OVER_C_STEADY LM_STEADY WTEFF_OVER_WS_STEADY WM_OVER_WS_TARGET RESEARCH_SHARE_TARGET CONSUMPTION_SHARE_TARGET FIXED_COST_SHARE_TARGET LABOUR_SHARE_TARGET;
 
-A_STEADY = 0.75;            // Spain/US, BCL TFP Database http://www.longtermproductivity.com/download.html
-U_OVER_C_STEADY = 0.6;      // Smets Wouters (2003)
-LM_STEADY = 0.1;            // ONS Annual Population Survey (via Nomis) - "corporate managers and directors" + "other managers and proprietors"
-WTEFF_OVER_WS_STEADY = 2.3;                      // EUROMOD https://www.euromod.ac.uk/using-euromod/statistics Decile 10 of Original Income for Spain over Deciles 1 to 9
+A_STEADY = 0.75;                                 // Spain/US, BCL TFP Database http://www.longtermproductivity.com/download.html
+U_OVER_C_STEADY = 0.4;                           // Smets Wouters (2003)
+LM_STEADY = 0.1;                                 // ONS Annual Population Survey (via Nomis) - "corporate managers and directors" + "other managers and proprietors"
+WTEFF_OVER_WS_STEADY = 2.3;                      // EUROMOD https://www.euromod.ac.uk/using-euromod/statistics Decile 9 of Original Income for Spain over Deciles 1 to 9
 WM_OVER_WS_TARGET = 3.8;                         // EUROMOD https://www.euromod.ac.uk/using-euromod/statistics Decile 10 of Original Income for Spain over Deciles 1 to 9
 RESEARCH_SHARE_TARGET = 0.012;                   // World Bank https://data.worldbank.org/indicator/GB.XPD.RSDV.GD.ZS
 CONSUMPTION_SHARE_TARGET = 0.6 / ( 0.6 + 0.22 ); // Smets Wouters (2003)
@@ -99,20 +99,20 @@ LABOUR_SHARE_TARGET = 0.7;                       // Smets Wouters (2003)
 // The following block of params are set here.
 parameters R_STEADY GPdollar_STEADY GAs_STEADY varsigma alphaT HC_SHARE nuS gamma tau eta deltaS deltaT PhiS2 PhiT2;
 
-R_STEADY = ( 1.03 ) ^ ( 1 / 4 );                 //* Steady-state real interest rate from Smets Wouters (2007)
-GPdollar_STEADY = exp( -0.00361309247175487 );   //* From data used for estimation.
-GAs_STEADY = exp( 0.00319206470220157 );         //* http://www.frbsf.org/economic-research/indicators-data/total-factor-productivity-tfp/
-varsigma = 1.4;             //* Smets Wouters (2003)
-alphaT = 0.5;               //*
-HC_SHARE = 0;               //* Only used in calibration.
-nuS = 2.5;                  //* Smets Wouters (2003)
-gamma = 0.999;              //* Jaimovich Rebelo (2009)
-tau = 1;                    //
-eta = 0.5;                  //*
-deltaS = 0.025;             //* Smets Wouters (2003) calibrate to 0.025
-deltaT = 0.25;              // Smets Wouters (2003) calibrate to 0.025
-PhiS2 = 3.5;                //* Smets Wouters (2003)
-PhiT2 = 3.5;                //* Smets Wouters (2003)
+R_STEADY = ( 1.03 ) ^ ( 1 / 4 );                 // Steady-state real interest rate from Smets Wouters (2007)
+GPdollar_STEADY = exp( -0.00361309247175487 );   // From data used for estimation.
+GAs_STEADY = exp( 0.00319206470220157 );         // http://www.frbsf.org/economic-research/indicators-data/total-factor-productivity-tfp/
+varsigma = 1.4;                                  // Smets Wouters (2003)
+alphaT = 0.5;                                    //
+HC_SHARE = 0;                                    // Only used in calibration.
+nuS = 2.5;                                       // Smets Wouters (2003)
+gamma = 0.999;                                   // Jaimovich Rebelo (2009)
+tau = 1;                                         //
+eta = 0.5;                                       //
+deltaS = 0.025;                                  // Smets Wouters (2003) calibrate to 0.025
+deltaT = 0.25;                                   // Smets Wouters (2003) calibrate to 0.025
+PhiS2 = 3.5;                                     // Smets Wouters (2003)
+PhiT2 = 3.5;                                     // Smets Wouters (2003)
 
 // The following parameters are estimated.
 parameters theta nuT nuM;
