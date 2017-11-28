@@ -11,5 +11,12 @@
 
 *.fig
 *-trim.png
+outcmaes*.dat
 
 checksum
+
+CatchUpCycles.m
+CatchUpCycles_params_derivs.m
+CatchUpCycles_static_params_derivs.m
+variablescmaes.mat
+signals.par
