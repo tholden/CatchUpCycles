@@ -368,6 +368,6 @@ check;
     @#if Estimation
         stoch_simul( order = 1, irf = 400, periods = 0, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
     @#else
-        stoch_simul( order = 2, irf = 400, periods = 0, drop = 100, replic = 100, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
+        stoch_simul( order = 2, irf = 400, periods = 10100, drop = 100, replic = 100, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
     @#endif
 @#endif
