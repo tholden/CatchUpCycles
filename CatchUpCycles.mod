@@ -1,3 +1,9 @@
+@#ifdef dynareOBC
+    @#define Estimation = 0
+@#else
+    @#define Estimation = 1
+@#endif
+
 @#includepath "DynareTransformationEngine"
 
 @#include "Initialize.mod"
@@ -121,19 +127,21 @@ nuT = nuS;
 nuM = nuS;
 theta = 0.01;
 
-varobs log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
-
 load_params_and_steady_state( 'SteadyState.txt' );
 
-estimated_params;
-    @#for ShockProcessName in ShockProcessNames
-        rho_@{ShockProcessName}, rho_@{ShockProcessName}, beta_pdf, 0.5, sqrt( 1 / 20 );
-        sigma_@{ShockProcessName}, sigma_@{ShockProcessName}, gamma_pdf, (1/2)*0.01+(1/2)*sqrt(0.01^2+4*1^2), 1;
-    @#endfor
-    nuT, nuT, gamma_pdf, (1/2)*nuS+(1/2)*sqrt(nuS^2+4*nuS^2), nuS;
-    nuM, nuM, gamma_pdf, (1/2)*nuS+(1/2)*sqrt(nuS^2+4*nuS^2), nuS;
-    theta, theta, gamma_pdf, (1/2)*0.01+(1/2)*sqrt(0.01^2+4*0.01^2), 0.01;
-end;
+@#if Estimation
+    varobs log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
+
+    estimated_params;
+        @#for ShockProcessName in ShockProcessNames
+            rho_@{ShockProcessName}, rho_@{ShockProcessName}, beta_pdf, 0.5, sqrt( 1 / 20 );
+            sigma_@{ShockProcessName}, sigma_@{ShockProcessName}, gamma_pdf, (1/2)*0.01+(1/2)*sqrt(0.01^2+4*1^2), 1;
+        @#endfor
+        nuT, nuT, gamma_pdf, (1/2)*nuS+(1/2)*sqrt(nuS^2+4*nuS^2), nuS;
+        nuM, nuM, gamma_pdf, (1/2)*nuS+(1/2)*sqrt(nuS^2+4*nuS^2), nuS;
+        theta, theta, gamma_pdf, (1/2)*0.01+(1/2)*sqrt(0.01^2+4*0.01^2), 0.01;
+    end;
+@#endif
 
 model;
 
@@ -342,8 +350,6 @@ options_.qz_criterium = 1 - 1e-8;
 steady;
 check;
 
-@#define Estimation = 1
-
 @#if Estimation
     estimation( order = 1, datafile = 'EstimationData.xlsx', xls_sheet = Data, xls_range = A1:F336, plot_priors = 0, lik_init = 1, mh_replic = 0, mh_nblocks = 0, mode_check, prior_trunc = 0,
         mode_compute = 1, optim = ( 'Algorithm', 'sqp', 'Display', 'iter-detailed', 'DerivativeCheck', 'on', 'FinDiffType', 'central', 'MaxFunEvals', 1e12, 'MaxIter', 1e12, 'TolFun', 1e-16, 'TolCon', 1e-16, 'TolX', 1e-16 ),
@@ -352,10 +358,16 @@ check;
         smoother, forecast = 400, kalman_algo = 1, keep_kalman_algo_if_singularity_is_detected, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
 @#endif
 
-save_params_and_steady_state( 'SteadyState.txt' );
+@#ifndef dynareOBC
+    save_params_and_steady_state( 'SteadyState.txt' );
+@#endif
 
 @#if Deterministic
     simul( periods = 10000, maxit = 1000000, tolf = 1e-8, tolx = 1e-8, stack_solve_algo = 7, solve_algo = 0 ); // endogenous_terminal_period
 @#else
-    stoch_simul( order = 1, irf = 400, periods = 0, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
+    @#if Estimation
+        stoch_simul( order = 1, irf = 400, periods = 0, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
+    @#else
+        stoch_simul( order = 2, irf = 400, periods = 0, drop = 100, replic = 100, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
+    @#endif
 @#endif
