@@ -53,7 +53,7 @@
 @#define EndoVariables = EndoVariables + [ "sm", "-Inf", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "R", "0", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "Jd", "0", "Inf", "1" ]
-@#define EndoVariables = EndoVariables + [ "Td", "0", "Inf", "1" ]
+@#define EndoVariables = EndoVariables + [ "Td", "-Inf", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "LS", "0", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "LT", "0", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "LM", "0", "Inf", "1" ]
@@ -349,7 +349,7 @@ check;
         mode_compute = 1, optim = ( 'Algorithm', 'sqp', 'Display', 'iter-detailed', 'DerivativeCheck', 'on', 'FinDiffType', 'central', 'MaxFunEvals', 1e12, 'MaxIter', 1e12, 'TolFun', 1e-16, 'TolCon', 1e-16, 'TolX', 1e-16 ),
         // mode_compute = 7, optim = ( 'Display', 'iter-detailed', 'MaxFunEvals', 1e12, 'MaxIter', 1e12, 'TolFun', 1e-16, 'TolX', 1e-16 ),
         // mode_compute = 9, optim = ( 'MaxFunEvals', 1e12, 'MaxIter', 1e12, 'TolFun', 1e-16, 'TolX', 1e-16 ),
-        smoother, forecast = 400, kalman_algo = 1, keep_kalman_algo_if_singularity_is_detected, graph_format = none ) log_A log_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
+        smoother, forecast = 400, kalman_algo = 1, keep_kalman_algo_if_singularity_is_detected, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
 @#endif
 
 save_params_and_steady_state( 'SteadyState.txt' );
@@ -357,5 +357,5 @@ save_params_and_steady_state( 'SteadyState.txt' );
 @#if Deterministic
     simul( periods = 10000, maxit = 1000000, tolf = 1e-8, tolx = 1e-8, stack_solve_algo = 7, solve_algo = 0 ); // endogenous_terminal_period
 @#else
-    stoch_simul( order = 1, irf = 400, periods = 0, nofunctions, graph_format = none ) log_A log_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
+    stoch_simul( order = 1, irf = 400, periods = 0, nofunctions, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM; // k_order_solver, nocorr, nodisplay, nograph
 @#endif
