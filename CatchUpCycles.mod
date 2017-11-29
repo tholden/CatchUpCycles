@@ -356,6 +356,8 @@ check;
         // mode_compute = 7, optim = ( 'Display', 'iter-detailed', 'MaxFunEvals', 1e12, 'MaxIter', 1e12, 'TolFun', 1e-16, 'TolX', 1e-16 ),
         // mode_compute = 9, optim = ( 'MaxFunEvals', 1e12, 'MaxIter', 1e12, 'TolFun', 1e-16, 'TolX', 1e-16 ),
         smoother, forecast = 400, kalman_algo = 1, keep_kalman_algo_if_singularity_is_detected, graph_format = none ) log_A level_Td log_Jd log_C log_IS log_IT log_LS log_LT log_LM log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
+        
+    shock_decomposition( parameter_set = posterior_mode ) log_Rs log_GPdollar log_GAs log_GC log_GI log_GW;
 @#endif
 
 @#ifndef dynareOBC
